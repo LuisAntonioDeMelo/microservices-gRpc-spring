@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.models";
+
+import "common/address.proto";
+import "common/car.proto";
+
+message Person {
+  string name = 1;
+  int32  age = 2;
+  repeated Car cars = 3;
+  Address address = 4;
+}
+
+

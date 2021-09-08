@@ -1,0 +1,8 @@
+option java_multiple_files = true;
+option java_package = "br.com.models";
+
+import "common/car.proto";
+
+message Dealer {
+  map<int32,Car> model = 1;
+}
