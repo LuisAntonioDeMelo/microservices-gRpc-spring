@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.models.common";
+
+
+message Car {
+  string model = 1;
+  string year = 2;
+  string plac = 3;
+  BodyType body_type =4;
+}
+
+
+enum BodyType {
+  NONE = 0;
+  SUV = 1;
+  SEDAN = 2;
+  HATCH = 3;
+}
