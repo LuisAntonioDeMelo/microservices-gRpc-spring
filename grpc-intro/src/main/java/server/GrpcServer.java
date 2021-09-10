@@ -15,6 +15,7 @@ public class GrpcServer {
         server.start();
         System.out.println("###########################################################################\n" +
                             "      ##############   gRpc Server : port 6565       ################");
+        System.out.println("Running ::::::::::::::::::: ");
         server.awaitTermination();
     }
 }

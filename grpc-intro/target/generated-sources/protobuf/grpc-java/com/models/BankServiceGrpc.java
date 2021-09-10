@@ -59,6 +59,70 @@ public final class BankServiceGrpc {
      return getGetBalanceMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.models.WithdrawRequest,
+      com.models.Money> getWithdrawMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "withdraw",
+      requestType = com.models.WithdrawRequest.class,
+      responseType = com.models.Money.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.models.WithdrawRequest,
+      com.models.Money> getWithdrawMethod() {
+    io.grpc.MethodDescriptor<com.models.WithdrawRequest, com.models.Money> getWithdrawMethod;
+    if ((getWithdrawMethod = BankServiceGrpc.getWithdrawMethod) == null) {
+      synchronized (BankServiceGrpc.class) {
+        if ((getWithdrawMethod = BankServiceGrpc.getWithdrawMethod) == null) {
+          BankServiceGrpc.getWithdrawMethod = getWithdrawMethod = 
+              io.grpc.MethodDescriptor.<com.models.WithdrawRequest, com.models.Money>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(
+                  "BankService", "withdraw"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.models.WithdrawRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.models.Money.getDefaultInstance()))
+                  .setSchemaDescriptor(new BankServiceMethodDescriptorSupplier("withdraw"))
+                  .build();
+          }
+        }
+     }
+     return getWithdrawMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.models.DepositRequest,
+      com.models.Balance> getCashDepositMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "cashDeposit",
+      requestType = com.models.DepositRequest.class,
+      responseType = com.models.Balance.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+  public static io.grpc.MethodDescriptor<com.models.DepositRequest,
+      com.models.Balance> getCashDepositMethod() {
+    io.grpc.MethodDescriptor<com.models.DepositRequest, com.models.Balance> getCashDepositMethod;
+    if ((getCashDepositMethod = BankServiceGrpc.getCashDepositMethod) == null) {
+      synchronized (BankServiceGrpc.class) {
+        if ((getCashDepositMethod = BankServiceGrpc.getCashDepositMethod) == null) {
+          BankServiceGrpc.getCashDepositMethod = getCashDepositMethod = 
+              io.grpc.MethodDescriptor.<com.models.DepositRequest, com.models.Balance>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setFullMethodName(generateFullMethodName(
+                  "BankService", "cashDeposit"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.models.DepositRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.models.Balance.getDefaultInstance()))
+                  .setSchemaDescriptor(new BankServiceMethodDescriptorSupplier("cashDeposit"))
+                  .build();
+          }
+        }
+     }
+     return getCashDepositMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -87,10 +151,33 @@ public final class BankServiceGrpc {
   public static abstract class BankServiceImplBase implements io.grpc.BindableService {
 
     /**
+     * <pre>
+     * unary
+     * </pre>
      */
     public void getBalance(com.models.BalanceCheckRequest request,
         io.grpc.stub.StreamObserver<com.models.Balance> responseObserver) {
       asyncUnimplementedUnaryCall(getGetBalanceMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * streaming
+     * </pre>
+     */
+    public void withdraw(com.models.WithdrawRequest request,
+        io.grpc.stub.StreamObserver<com.models.Money> responseObserver) {
+      asyncUnimplementedUnaryCall(getWithdrawMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * client side
+     * </pre>
+     */
+    public io.grpc.stub.StreamObserver<com.models.DepositRequest> cashDeposit(
+        io.grpc.stub.StreamObserver<com.models.Balance> responseObserver) {
+      return asyncUnimplementedStreamingCall(getCashDepositMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -102,6 +189,20 @@ public final class BankServiceGrpc {
                 com.models.BalanceCheckRequest,
                 com.models.Balance>(
                   this, METHODID_GET_BALANCE)))
+          .addMethod(
+            getWithdrawMethod(),
+            asyncServerStreamingCall(
+              new MethodHandlers<
+                com.models.WithdrawRequest,
+                com.models.Money>(
+                  this, METHODID_WITHDRAW)))
+          .addMethod(
+            getCashDepositMethod(),
+            asyncClientStreamingCall(
+              new MethodHandlers<
+                com.models.DepositRequest,
+                com.models.Balance>(
+                  this, METHODID_CASH_DEPOSIT)))
           .build();
     }
   }
@@ -125,11 +226,36 @@ public final class BankServiceGrpc {
     }
 
     /**
+     * <pre>
+     * unary
+     * </pre>
      */
     public void getBalance(com.models.BalanceCheckRequest request,
         io.grpc.stub.StreamObserver<com.models.Balance> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetBalanceMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * streaming
+     * </pre>
+     */
+    public void withdraw(com.models.WithdrawRequest request,
+        io.grpc.stub.StreamObserver<com.models.Money> responseObserver) {
+      asyncServerStreamingCall(
+          getChannel().newCall(getWithdrawMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * client side
+     * </pre>
+     */
+    public io.grpc.stub.StreamObserver<com.models.DepositRequest> cashDeposit(
+        io.grpc.stub.StreamObserver<com.models.Balance> responseObserver) {
+      return asyncClientStreamingCall(
+          getChannel().newCall(getCashDepositMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -152,10 +278,24 @@ public final class BankServiceGrpc {
     }
 
     /**
+     * <pre>
+     * unary
+     * </pre>
      */
     public com.models.Balance getBalance(com.models.BalanceCheckRequest request) {
       return blockingUnaryCall(
           getChannel(), getGetBalanceMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * streaming
+     * </pre>
+     */
+    public java.util.Iterator<com.models.Money> withdraw(
+        com.models.WithdrawRequest request) {
+      return blockingServerStreamingCall(
+          getChannel(), getWithdrawMethod(), getCallOptions(), request);
     }
   }
 
@@ -178,6 +318,9 @@ public final class BankServiceGrpc {
     }
 
     /**
+     * <pre>
+     * unary
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.models.Balance> getBalance(
         com.models.BalanceCheckRequest request) {
@@ -187,6 +330,8 @@ public final class BankServiceGrpc {
   }
 
   private static final int METHODID_GET_BALANCE = 0;
+  private static final int METHODID_WITHDRAW = 1;
+  private static final int METHODID_CASH_DEPOSIT = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -209,6 +354,10 @@ public final class BankServiceGrpc {
           serviceImpl.getBalance((com.models.BalanceCheckRequest) request,
               (io.grpc.stub.StreamObserver<com.models.Balance>) responseObserver);
           break;
+        case METHODID_WITHDRAW:
+          serviceImpl.withdraw((com.models.WithdrawRequest) request,
+              (io.grpc.stub.StreamObserver<com.models.Money>) responseObserver);
+          break;
         default:
           throw new AssertionError();
       }
@@ -219,6 +368,9 @@ public final class BankServiceGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_CASH_DEPOSIT:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.cashDeposit(
+              (io.grpc.stub.StreamObserver<com.models.Balance>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -271,6 +423,8 @@ public final class BankServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new BankServiceFileDescriptorSupplier())
               .addMethod(getGetBalanceMethod())
+              .addMethod(getWithdrawMethod())
+              .addMethod(getCashDepositMethod())
               .build();
         }
       }
